@@ -12,9 +12,9 @@ export default function PokedexCard({
   onClick: () => void;
 }) {
   const gridClassName =
-    "h-70 lg:h-100 border-2 border-amber-300 shadow-lg shadow-amber-300 rounded-2xl dark:bg-gray-600 bg-white flex flex-col justify-between cursor-pointer";
+    "h-70 lg:h-100 border-2 border-amber-300 shadow-lg shadow-amber-300 rounded-2xl dark:bg-gray-600 bg-white flex flex-col justify-between cursor-pointer hover:shadow-red-500 duration-200 ease-in-out";
   const listClassName =
-    "h-35 mb-4 border-2 border-amber-300 shadow-lg shadow-amber-300 rounded-2xl dark:bg-gray-400 bg-white flex justify-between cursor-pointer";
+    "h-35 mb-4 border-2 border-amber-300 shadow-lg shadow-amber-300 rounded-2xl dark:bg-gray-400 bg-white flex justify-between cursor-pointer hover:shadow-red-500 duration-200 ease-in-out";
 
   const imageGridClassName =
     "relative w-full max-w-25 md:max-w[150px] lg:max-w-50 aspect-square self-end";

@@ -2,6 +2,7 @@
 import {
   Grid,
   List,
+  Search,
 } from "lucide-react";
 import {
   useCapturedFilterStore,
@@ -133,13 +134,16 @@ const SearchFilterBar = () => {
       (state) => state.setSearch,
     );
   return (
-    <input
-      defaultValue={""}
-      onChange={(e) =>
-        setSearch(e.target.value)
-      }
-      className="mb-3 py-2 border border-solid mt-10 px-3 rounded-2xl"
-      placeholder="Search"
-    />
+    <div className="flex justify-center items-center  mt-10">
+      <Search className="mr-3"/>
+      <input
+        defaultValue={""}
+        onChange={(e) =>
+          setSearch(e.target.value)
+        }
+        className="py-2 border-2 border-solid px-3 rounded-2xl dark:bg-gray-600 w-150"
+        placeholder="Search"
+      />
+    </div>
   );
 };

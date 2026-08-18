@@ -35,9 +35,6 @@ export default function RootLayout({
           )}") center / cover no-repeat fixed`,
         }}
       >
-        <div className="fixed inset-0 -z-10">
-          <div className="absolute inset-0 scale-105 bg-cover bg-center blur-sm" />
-        </div>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
