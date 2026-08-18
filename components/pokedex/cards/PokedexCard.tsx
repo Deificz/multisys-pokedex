@@ -18,7 +18,7 @@ export default function PokedexCard({
 
   const imageGridClassName =
     "relative w-full max-w-25 md:max-w[150px] lg:max-w-50 aspect-square self-end";
-  console.log(details);
+
   return (
     <div
       className={

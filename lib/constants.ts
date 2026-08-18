@@ -10,75 +10,75 @@ export const POKEMON_TYPE_COLORS: Record<
   }
 > = {
   normal: {
-    bg: "gray-400",
+    bg: "bg-gray-400",
     shadow: "shadow-gray-400",
   },
   fire: {
-    bg: "orange-500",
+    bg: "bg-orange-500",
     shadow: "shadow-orange-500",
   },
   water: {
-    bg: "blue-500",
+    bg: "bg-blue-500",
     shadow: "shadow-blue-500",
   },
   electric: {
-    bg: "yellow-400",
+    bg: "bg-yellow-400",
     shadow: "shadow-yellow-400",
   },
   grass: {
-    bg: "green-500",
+    bg: "bg-green-500",
     shadow: "shadow-green-500",
   },
   ice: {
-    bg: "cyan-300",
+    bg: "bg-cyan-300",
     shadow: "shadow-cyan-300",
   },
   fighting: {
-    bg: "red-700",
+    bg: "bg-red-700",
     shadow: "shadow-red-700",
   },
   poison: {
-    bg: "purple-500",
+    bg: "bg-purple-500",
     shadow: "shadow-purple-500",
   },
   ground: {
-    bg: "amber-600",
+    bg: "bg-amber-600",
     shadow: "shadow-amber-600",
   },
   flying: {
-    bg: "indigo-400",
+    bg: "bg-indigo-400",
     shadow: "shadow-indigo-400",
   },
   psychic: {
-    bg: "pink-500",
+    bg: "bg-pink-500",
     shadow: "shadow-pink-500",
   },
   bug: {
-    bg: "lime-500",
+    bg: "bg-lime-500",
     shadow: "shadow-lime-500",
   },
   rock: {
-    bg: "stone-500",
+    bg: "bg-stone-500",
     shadow: "shadow-stone-500",
   },
   ghost: {
-    bg: "indigo-700",
+    bg: "bg-indigo-700",
     shadow: "shadow-indigo-700",
   },
   dragon: {
-    bg: "violet-700",
+    bg: "bg-violet-700",
     shadow: "shadow-violet-700",
   },
   dark: {
-    bg: "gray-800",
+    bg: "bg-gray-800",
     shadow: "shadow-gray-800",
   },
   steel: {
-    bg: "slate-500",
+    bg: "bg-slate-500",
     shadow: "shadow-slate-500",
   },
   fairy: {
-    bg: "pink-300",
+    bg: "bg-pink-300",
     shadow: "shadow-pink-300",
   },
 };

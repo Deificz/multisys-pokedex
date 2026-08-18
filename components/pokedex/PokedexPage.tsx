@@ -5,12 +5,12 @@ import {
   useCapturedFilterStore,
   useListLayoutStore,
 } from "@/stores/useListLayout";
-import PokedexListLayout from "./listing/PokedexListLayout";
-import PokedexGridLayout from "./listing/PokedexGridLayout";
+import PokedexLayout from "./listing/PokedexLayout";
 import { usePokedexList } from "@/hooks/usePokedex";
 import {
   useEffect,
   useRef,
+  useState,
 } from "react";
 import { Dialog } from "../ui/dialog";
 import PokemonProfileDialog from "../pokemon-profile/PokemonProfileDialog";
@@ -38,28 +38,26 @@ export default function PokedexPage({}: Props) {
     refetch,
   } = usePokedexList();
 
-  const capturedData = {
+  const [
+    capturedData,
+    setCapturedData,
+  ] = useState({
     pageParams: [0],
     pages: [
       {
         count: 0,
         next: "",
         previous: null,
-        results: JSON.parse(
-          localStorage.getItem(
-            "savedPokemons",
-          ) ?? "[]",
-        ),
+        results: [],
       },
     ],
-  };
-
-  console.log(data);
+  });
   const loadMoreRef =
     useRef<HTMLDivElement>(null);
 
   //Observer for users when they reach at the bottom to trigger API Fetch
   const observerFunction = () => {
+    if (captured) return;
     let timeout: ReturnType<
       typeof setTimeout
     > | null = null;
@@ -103,21 +101,72 @@ export default function PokedexPage({}: Props) {
     };
   };
 
+  const rehydrateCapturedPokemons =
+    () => {
+      const saved =
+        localStorage.getItem(
+          "savedPokemons",
+        );
+
+      const pokemons = saved
+        ? JSON.parse(saved)
+        : [];
+
+      setCapturedData({
+        pageParams: [0],
+        pages: [
+          {
+            count: pokemons.length,
+            next: "",
+            previous: null,
+            results: pokemons.map(
+              (pokemon: any) => {
+                const id = pokemon.url
+                  .split("/")
+                  .filter(Boolean)
+                  .pop();
+                const is_captured =
+                  pokemons.find(
+                    (
+                      savedPokemon: SavedPokemonType,
+                    ) =>
+                      savedPokemon.name ===
+                      pokemon.name,
+                  );
+                return {
+                  ...pokemon,
+                  image: `https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/${id}.png`,
+                  captured:
+                    is_captured ?? null,
+                };
+              },
+            ),
+          },
+        ],
+      });
+    };
+
   useEffect(() => {
     return observerFunction();
   }, [
+    captured,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
     selectedLayout,
   ]);
 
+  useEffect(() => {
+    rehydrateCapturedPokemons();
+  }, [captured]);
+
   return (
     <div className="">
       <PokedexFilterBar />
       <div className="mt-20">
         {selectedLayout == "grid" ? (
-          <PokedexGridLayout
+          <PokedexLayout
+            layout="grid"
             loadMoreRef={loadMoreRef}
             data={
               captured
@@ -126,7 +175,8 @@ export default function PokedexPage({}: Props) {
             }
           />
         ) : (
-          <PokedexListLayout
+          <PokedexLayout
+            layout="list"
             loadMoreRef={loadMoreRef}
             data={
               captured

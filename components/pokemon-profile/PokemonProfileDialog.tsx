@@ -62,7 +62,6 @@ export default function PokemonProfileDialog({
 
   const color =
     POKEMON_TYPE_COLORS[typeName];
-
   // Submit Function
   const onSubmit = (
     data: SavedPokemonType,
@@ -112,7 +111,7 @@ export default function PokemonProfileDialog({
       }}
     >
       <DialogContent
-        className={`bg-${color?.bg} shadow-2xl ${color?.shadow}`}
+        className={`${color?.bg} shadow-2xl ${color?.shadow}`}
       >
         {/* Fallback Values*/}
         {isLoading && (

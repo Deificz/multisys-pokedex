@@ -87,7 +87,6 @@ const CapturedFilterSwitch = () => {
     useCapturedFilterStore(
       (state) => state.setCaptured,
     );
-    console.log(captured)
   return (
     <div className="flex justify-center items-center mt-5">
       <p className="mr-2">Captured</p>
