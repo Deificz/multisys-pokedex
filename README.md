@@ -1,4 +1,4 @@
-# Pokédex Web App
+# Multisys Pokédex Web App
 
 A modern and responsive Pokédex web application built with **Next.js, TypeScript, TanStack Query, Zustand, shadcn/ui, and Tailwind CSS**. It uses the **PokéAPI** to fetch Pokémon data and provides searching, filtering, responsive layouts, and infinite scrolling.
 
