@@ -29,7 +29,7 @@ export default function PokedexCard({
       onClick={onClick}
     >
       <div className="p-5">
-        <h1 className="text-xs lg:text-lg">
+        <h1 className="text-xs xl:text-lg">
           {details?.name}{" "}
         </h1>
         {details?.captured
@@ -88,7 +88,7 @@ const Badges = ({
     >
       <Badge
         variant="destructive"
-        className="mb-2 mr-3  text-[8px]"
+        className="mb-2 mr-3 text-[8px]"
       >
         Captured
       </Badge>

@@ -135,7 +135,7 @@ const SearchFilterBar = () => {
     );
   return (
     <div className="flex justify-center items-center  mt-10">
-      <Search className="mr-3"/>
+      <Search className="mr-3 hidden sm:block"/>
       <input
         defaultValue={""}
         onChange={(e) =>
