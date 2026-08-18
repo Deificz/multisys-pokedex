@@ -1,3 +1,4 @@
+import { PokemonDetails } from "@/types/pokemonTypes";
 import {
   clsx,
   type ClassValue,
@@ -73,5 +74,35 @@ export const updatePokemon = (
   localStorage.setItem(
     "savedPokemons",
     JSON.stringify(updatedList),
+  );
+};
+
+export const restructurePokemonData = (
+  pokemons: SavedPokemonType[],
+) => {
+  const savedPokemons = JSON.parse(
+    localStorage.getItem(
+      "savedPokemons",
+    ) || "[]",
+  );
+  return pokemons.map(
+    (pokemon: any) => {
+      const id = pokemon.url
+        .split("/")
+        .filter(Boolean)
+        .pop();
+      const is_captured = savedPokemons.find(
+        (
+          savedPokemon: SavedPokemonType,
+        ) =>
+          savedPokemon.name ===
+          pokemon.name,
+      );
+      return {
+        ...pokemon,
+        image: `https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/${id}.png`,
+        captured: is_captured ?? null,
+      };
+    },
   );
 };

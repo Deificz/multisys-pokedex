@@ -2,6 +2,8 @@
 
 import React, {
   RefObject,
+  useMemo,
+  useState,
 } from "react";
 import {
   PokemonDetails,
@@ -11,7 +13,10 @@ import { InfiniteData } from "@tanstack/react-query";
 import PokedexSkeletonCard from "../cards/PokedexSkeletonCard";
 import PokedexCard from "../cards/PokedexCard";
 import { usePokemonStore } from "@/stores/usePokemon";
-import { useCapturedFilterStore } from "@/stores/useListLayout";
+import {
+  useCapturedFilterStore,
+  useSearchFilterStore,
+} from "@/stores/useListLayout";
 
 type Props = {
   data?: InfiniteData<
@@ -30,21 +35,47 @@ export default function PokedexLayout({
     "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4";
   const listClassname = "flex flex-col";
 
+  const search = useSearchFilterStore(
+    (state) => state.search,
+  );
+
+  const pokemons = useMemo(() => {
+    return (
+      data?.pages.flatMap(
+        (page) => page.results,
+      ) ?? []
+    );
+  }, [data]);
+
+  const filteredPokemons =
+    useMemo(() => {
+      return pokemons?.filter(
+        (pokemon) =>
+          pokemon.name
+            .toLowerCase()
+            .includes(
+              search.toLowerCase(),
+            ),
+      );
+    }, [pokemons, search]);
+
+  const captured =
+    useCapturedFilterStore(
+      (state) => state.captured,
+    );
+
   const setSelectedPokemon =
     usePokemonStore(
       (state) =>
         state.setSelectedPokemon,
     );
-  const captured =
-    useCapturedFilterStore(
-      (state) => state.captured,
-    );
+
   return (
     <div
       className={`${layout === "grid" ? gridClassname : listClassname}`}
     >
-      {data?.pages?.map((page) =>
-        page.results.map((pokemon) => (
+      {filteredPokemons.map(
+        (pokemon) => (
           <PokedexCard
             layout={layout}
             key={pokemon.name}
@@ -55,9 +86,10 @@ export default function PokedexLayout({
               )
             }
           />
-        )),
+        ),
       )}
       {!captured &&
+        !search &&
         Array.from({
           length:
             layout == "grid" ? 5 : 1,

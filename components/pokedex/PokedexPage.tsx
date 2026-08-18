@@ -14,6 +14,9 @@ import {
 } from "react";
 import { Dialog } from "../ui/dialog";
 import PokemonProfileDialog from "../pokemon-profile/PokemonProfileDialog";
+import { restructurePokemonData } from "@/lib/utils";
+import { InfiniteData } from "@tanstack/react-query";
+import { PokemonList } from "@/types/pokemonTypes";
 
 type Props = {};
 
@@ -23,7 +26,7 @@ export default function PokedexPage({}: Props) {
     useListLayoutStore(
       (state) => state.selectedLayout,
     );
-  const captured =
+  const filterCaptured =
     useCapturedFilterStore(
       (state) => state.captured,
     );
@@ -41,23 +44,16 @@ export default function PokedexPage({}: Props) {
   const [
     capturedData,
     setCapturedData,
-  ] = useState({
-    pageParams: [0],
-    pages: [
-      {
-        count: 0,
-        next: "",
-        previous: null,
-        results: [],
-      },
-    ],
-  });
+  ] =
+    useState<
+      InfiniteData<PokemonList, number>
+    >();
   const loadMoreRef =
     useRef<HTMLDivElement>(null);
 
   //Observer for users when they reach at the bottom to trigger API Fetch
   const observerFunction = () => {
-    if (captured) return;
+    if (filterCaptured) return;
     let timeout: ReturnType<
       typeof setTimeout
     > | null = null;
@@ -119,28 +115,10 @@ export default function PokedexPage({}: Props) {
             count: pokemons.length,
             next: "",
             previous: null,
-            results: pokemons.map(
-              (pokemon: any) => {
-                const id = pokemon.url
-                  .split("/")
-                  .filter(Boolean)
-                  .pop();
-                const is_captured =
-                  pokemons.find(
-                    (
-                      savedPokemon: SavedPokemonType,
-                    ) =>
-                      savedPokemon.name ===
-                      pokemon.name,
-                  );
-                return {
-                  ...pokemon,
-                  image: `https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/${id}.png`,
-                  captured:
-                    is_captured ?? null,
-                };
-              },
-            ),
+            results:
+              restructurePokemonData(
+                pokemons,
+              ),
           },
         ],
       });
@@ -149,7 +127,7 @@ export default function PokedexPage({}: Props) {
   useEffect(() => {
     return observerFunction();
   }, [
-    captured,
+    filterCaptured,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
@@ -158,18 +136,18 @@ export default function PokedexPage({}: Props) {
 
   useEffect(() => {
     rehydrateCapturedPokemons();
-  }, [captured]);
+  }, [filterCaptured]);
 
   return (
     <div className="">
       <PokedexFilterBar />
-      <div className="mt-20">
+      <div className="mt-10">
         {selectedLayout == "grid" ? (
           <PokedexLayout
             layout="grid"
             loadMoreRef={loadMoreRef}
             data={
-              captured
+              filterCaptured
                 ? capturedData
                 : data
             }
@@ -179,7 +157,7 @@ export default function PokedexPage({}: Props) {
             layout="list"
             loadMoreRef={loadMoreRef}
             data={
-              captured
+              filterCaptured
                 ? capturedData
                 : data
             }
@@ -188,6 +166,8 @@ export default function PokedexPage({}: Props) {
       </div>
       <PokemonProfileDialog
         refetch={refetch}
+        filterCaptured={filterCaptured}
+        rehydrateCapturedPokemons={rehydrateCapturedPokemons}
       />
     </div>
   );

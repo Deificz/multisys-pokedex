@@ -29,7 +29,7 @@ export default function PokedexCard({
       onClick={onClick}
     >
       <div className="p-5">
-        <h1 className="text-xs md:text-lg">
+        <h1 className="text-xs lg:text-lg">
           {details?.name}{" "}
         </h1>
         {details?.captured
@@ -58,6 +58,7 @@ export default function PokedexCard({
       >
         {layout == "grid" ? (
           <Image
+            sizes="(max-width: 100%) 100vw"
             className="object-contain"
             alt={`${details?.name} Image`}
             src={details?.image}
@@ -69,7 +70,6 @@ export default function PokedexCard({
             height={100}
             alt={`${details?.name} Image`}
             src={details?.image}
-            unoptimized
           />
         )}
       </div>

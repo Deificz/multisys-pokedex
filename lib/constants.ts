@@ -1,6 +1,6 @@
 import { PokemonClassType } from "@/types/pokemonTypes";
 
-export const POKEMONT_LIST_LIMIT = 10;
+export const POKEMON_LIST_LIMIT = 150;
 
 export const POKEMON_TYPE_COLORS: Record<
   PokemonClassType,

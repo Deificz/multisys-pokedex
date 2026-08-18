@@ -14,6 +14,11 @@ type CapturedFilterStore = {
   ) => void;
 };
 
+type SearchFilterStore = {
+  search: string;
+  setSearch: (search: string) => void;
+};
+
 export const useListLayoutStore =
   create<ListLayoutStore>((set) => ({
     selectedLayout: "grid",
@@ -30,3 +35,10 @@ export const useCapturedFilterStore =
         set({ captured: captured }),
     }),
   );
+
+export const useSearchFilterStore =
+  create<SearchFilterStore>((set) => ({
+    search: "",
+    setSearch: (search) =>
+      set({ search: search }),
+  }));

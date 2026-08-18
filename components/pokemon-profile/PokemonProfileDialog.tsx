@@ -28,9 +28,13 @@ import { useEffect } from "react";
 
 type Props = {
   refetch: () => void;
+  filterCaptured: boolean;
+  rehydrateCapturedPokemons: () => void;
 };
 export default function PokemonProfileDialog({
   refetch,
+  filterCaptured,
+  rehydrateCapturedPokemons,
 }: Props) {
   // Store
   const selectedPokemon =
@@ -86,6 +90,9 @@ export default function PokemonProfileDialog({
     }
     setSelectedPokemon(null);
     refetch();
+    if (filterCaptured) {
+      rehydrateCapturedPokemons();
+    }
   };
 
   useEffect(() => {
@@ -204,7 +211,10 @@ export default function PokemonProfileDialog({
             form={"pokemon-form"}
             type="submit"
           >
-            CAPTURE
+            {selectedPokemon?.captured
+              ?.captured_at
+              ? "UPDATE"
+              : "CAPTURE"}
           </Button>
         </DialogFooter>
       </DialogContent>
