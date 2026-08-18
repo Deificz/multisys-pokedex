@@ -106,3 +106,6 @@ export const restructurePokemonData = (
     },
   );
 };
+
+export const assetPath = (path: string) =>
+  `${process.env.NODE_ENV === "production" ? "/multisys-pokedex" : ""}${path}`;

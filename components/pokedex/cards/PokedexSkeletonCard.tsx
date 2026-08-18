@@ -1,3 +1,4 @@
+import { assetPath } from "@/lib/utils";
 import Image from "next/image";
 
 type Props = {
@@ -29,7 +30,9 @@ export default function PokedexSkeletonCard({
           height={
             layout == "list" ? 100 : 40
           }
-          src={"/images/poke_ball.png"}
+          src={assetPath(
+            "/images/poke_ball.png",
+          )}
         />
       </div>
     </div>

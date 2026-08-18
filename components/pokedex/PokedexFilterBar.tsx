@@ -18,6 +18,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "../ui/tooltip";
+import { assetPath } from "@/lib/utils";
 
 type Props = {};
 
@@ -30,7 +31,9 @@ export default function PokedexFilterBar({}: Props) {
       >
         <Image
           className=""
-          src={"/images/logo.png"}
+          src={assetPath(
+            "/images/logo.png",
+          )}
           width={"300"}
           height={"300"}
           alt="logo"
@@ -101,9 +104,9 @@ const CapturedFilterSwitch = () => {
         <TooltipTrigger>
           <Image
             className="mb-2"
-            src={
-              "/images/poke_ball.png"
-            }
+            src={assetPath(
+              "/images/poke_ball.png",
+            )}
             width={"30"}
             height={"30"}
             alt="logo"
