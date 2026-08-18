@@ -21,10 +21,14 @@ import { Button } from "../ui/button";
 import { useForm } from "react-hook-form";
 import {
   defaultDate,
+  removePokemon,
   savePokemon,
   updatePokemon,
 } from "@/lib/utils";
-import { useEffect } from "react";
+import {
+  useEffect,
+  useState,
+} from "react";
 
 type Props = {
   refetch: () => void;
@@ -54,6 +58,9 @@ export default function PokemonProfileDialog({
     formState: { errors },
   } = useForm<SavedPokemonType>();
 
+  const [isDeleting, setIsDeleting] =
+    useState(false);
+
   // Query
   const { data, isLoading, isError } =
     usePokedexDetails(
@@ -71,7 +78,6 @@ export default function PokemonProfileDialog({
     data: SavedPokemonType,
   ) => {
     if (!selectedPokemon) return;
-
     if (
       !selectedPokemon?.captured
         ?.captured_at
@@ -81,6 +87,13 @@ export default function PokemonProfileDialog({
         name: selectedPokemon?.name,
         url: selectedPokemon?.url,
       });
+    } else if (isDeleting) {
+      removePokemon({
+        ...data,
+        name: selectedPokemon?.name,
+        url: selectedPokemon?.url,
+      });
+      setIsDeleting(false)
     } else {
       updatePokemon({
         ...data,
@@ -207,6 +220,19 @@ export default function PokemonProfileDialog({
         </div>
 
         <DialogFooter className="flex justify-between">
+          {selectedPokemon?.captured
+            ?.captured_at && (
+            <Button
+              variant="destructive"
+              form={"pokemon-form"}
+              type="submit"
+              onClick={() =>
+                setIsDeleting(true)
+              }
+            >
+              RELEASE
+            </Button>
+          )}
           <Button
             form={"pokemon-form"}
             type="submit"

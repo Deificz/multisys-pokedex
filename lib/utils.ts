@@ -77,6 +77,29 @@ export const updatePokemon = (
   );
 };
 
+export const removePokemon = (
+  data: SavedPokemonType,
+) => {
+  const savedPokemons =
+    localStorage.getItem(
+      "savedPokemons",
+    );
+
+  const pokemonList = savedPokemons
+    ? JSON.parse(savedPokemons)
+    : [];
+  const updatedList =
+    pokemonList.filter(
+      (pokemon: SavedPokemonType) =>
+        pokemon.name !== data.name,
+    );
+
+  localStorage.setItem(
+    "savedPokemons",
+    JSON.stringify(updatedList),
+  );
+};
+
 export const restructurePokemonData = (
   pokemons: SavedPokemonType[],
 ) => {
@@ -91,13 +114,14 @@ export const restructurePokemonData = (
         .split("/")
         .filter(Boolean)
         .pop();
-      const is_captured = savedPokemons.find(
-        (
-          savedPokemon: SavedPokemonType,
-        ) =>
-          savedPokemon.name ===
-          pokemon.name,
-      );
+      const is_captured =
+        savedPokemons.find(
+          (
+            savedPokemon: SavedPokemonType,
+          ) =>
+            savedPokemon.name ===
+            pokemon.name,
+        );
       return {
         ...pokemon,
         image: `https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/${id}.png`,
@@ -107,5 +131,7 @@ export const restructurePokemonData = (
   );
 };
 
-export const assetPath = (path: string) =>
+export const assetPath = (
+  path: string,
+) =>
   `${process.env.NODE_ENV === "production" ? "/multisys-pokedex" : ""}${path}`;
